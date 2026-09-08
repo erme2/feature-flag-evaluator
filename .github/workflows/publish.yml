@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish to GitHub Packages
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
-      id-token: write
+      packages: write
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -28,10 +28,8 @@ jobs:
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "24"
-          registry-url: https://registry.npmjs.org
+          registry-url: https://npm.pkg.github.com
           package-manager-cache: false
-      - name: Ensure npm supports trusted publishing
-        run: npm install --global npm@11.19.0
       - name: Install dependencies
         run: npm ci
       - name: Bump patch version
@@ -55,7 +53,9 @@ jobs:
           git tag "$version"
           git push origin HEAD:main "$version"
       - name: Publish tested archive
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           packages=(artifacts/*.tgz)
           test "${#packages[@]}" -eq 1
-          npm publish "./${packages[0]}" --access public --ignore-scripts
+          npm publish "./${packages[0]}" --access public --ignore-scripts --registry=https://npm.pkg.github.com

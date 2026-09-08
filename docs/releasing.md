@@ -1,4 +1,4 @@
-# GitHub Actions and npm releases
+# GitHub Actions and GitHub Packages releases
 
 [Back to the README](../README.md)
 
@@ -12,18 +12,17 @@ Successful runs provide an `npm-package` artifact containing the tested archive.
 [`publish.yml`](../.github/workflows/publish.yml) runs after a non-initial push to
 `main`. It increments the patch version, validates and packs that version, commits
 the package metadata, creates a matching `vX.Y.Z` tag, pushes both, and publishes
-the tested archive through npm OIDC authentication. The workflow skips its own
-release commit to prevent a version-bump loop. Account setup and the first
-publication are described in the setup instructions below.
+the tested archive to GitHub Packages using the repository's `GITHUB_TOKEN`. The
+workflow skips its own release commit to prevent a version-bump loop.
 
 ## Release status
 
-The package is MIT licensed and configured for public npm access. The public
+The package is MIT licensed and configured for GitHub Packages access. The public
 repository is `erme2/feature-flag-evaluator`. A first local commit exists; no npm
 publication or successful hosted workflow run has been verified in this work.
 
 The private diary, correspondence, and original exercise brief are kept outside
-the repository. The npm archive contains the built library, declarations,
+the repository. The package archive contains the built library, declarations,
 README, Markdown guides, package metadata, and LICENSE. It contains no demo CSS.
 
 ## GitHub setup
@@ -44,18 +43,17 @@ The GitHub connector confirms repository access. Local Git over SSH returned
 `Permission denied (publickey)`; Git authentication must be configured before
 pushing this local history. No files have been pushed from this session.
 
-## First npm publication
+## GitHub Packages setup
 
-The `@erme2` scope requires an npm user or organization with that name and your
-permission to publish within it. Local npm is not currently authenticated.
-Complete npm login and any required account/2FA steps yourself; do not place
-credentials in project files or chat.
+The package is published under the `erme2` GitHub owner. The workflow uses the
+repository's built-in `GITHUB_TOKEN`, so no npm account or npm token is required.
+In the repository's **Settings → Actions → General**, ensure GitHub Actions may
+write packages.
 
-For a new package, first publish the validated initial version with your npm
-account so its package settings are available for trusted publisher setup:
+For a manual bootstrap, publish a validated archive with a GitHub token that has
+`write:packages`:
 
 ```sh
-npm login
 npm ci
 npm run format:check
 npm test
@@ -63,39 +61,22 @@ npm run build:demo
 npm run test:browser
 npm run test:package
 npm audit
-npm publish artifacts/erme2-feature-flag-evaluator-0.1.0.tgz --access public --ignore-scripts
+npm publish ./erme2-feature-flag-evaluator-0.1.0.tgz --access public --ignore-scripts --registry=https://npm.pkg.github.com
 ```
 
-The last command makes version 0.1.0 public. Run it only when the license,
-repository, package contents, and validation are ready. If a version is already
-published, do not republish it: npm name/version combinations are immutable.
-Confirm the result with:
+The package appears under the repository's **Packages** tab. Set its visibility
+to **Public** there so all GitHub users can install it.
 
 ```sh
-npm view @erme2/feature-flag-evaluator version
+
 ```
 
-## Configure trusted publishing
+Consumers need a GitHub token with `read:packages` and this npm configuration:
 
-In the npm package settings, add a GitHub Actions trusted publisher with:
-
-| Setting                  | Value                                                 |
-| ------------------------ | ----------------------------------------------------- |
-| GitHub organization/user | `erme2`                                               |
-| Repository               | `feature-flag-evaluator`                              |
-| Workflow filename        | `publish.yml`                                         |
-| Environment              | Leave empty; the workflow does not use an environment |
-| Allowed action           | Enable direct `npm publish`                           |
-
-The publish job uses GitHub-hosted Ubuntu, Node 24, npm 11.19.0, and
-`id-token: write`. It does not require an `NPM_TOKEN` secret. OIDC authenticates
-the selected workflow, while npm generates provenance for the public package
-from the public repository. The repository URL in package.json must match.
-
-See [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/) for the
-provider configuration and [npm publishing](https://docs.npmjs.com/cli/v11/commands/npm-publish/)
-for version and access behavior. The first account-authenticated publish and
-subsequent OIDC release publish are separate setup steps.
+```ini
+@erme2:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}
+```
 
 ## Subsequent releases
 
@@ -104,17 +85,14 @@ subsequent OIDC release publish are separate setup steps.
 3. The merge push runs `publish.yml`, which increments the patch version, reruns
    validation, commits the new package metadata, creates the matching tag, and
    publishes the tested archive.
-4. Confirm the workflow result and registry version, then install the published
+4. Confirm the workflow result and package version, then install the published
    package in a consuming project.
 
 The release job gets repository write permission to commit the version bump and
-push the tag, plus OIDC permission for npm. It validates the bumped version before
-packing and publishing. The workflow prevents two publishing jobs from running
-simultaneously and skips the initial push and its own release commit.
-
-Do not create a publishing GitHub Release for 0.1.0 after the manual bootstrap
-publication; that would attempt to publish the same immutable version again.
-Start automated publication at the next version.
+push the tag, plus package write permission for GitHub Packages. It validates the
+bumped version before packing and publishing. The workflow prevents two
+publishing jobs from running simultaneously and skips the initial push and its
+own release commit.
 
 ## Local verification
 
@@ -125,5 +103,6 @@ unstyled editor and callback in Chrome. It leaves the tested archive under
 Google Chrome are required. Playwright's normal demo tests start the server
 automatically and save screenshots under `test-results/`.
 
-A local test pass does not verify GitHub runner execution, npm ownership, OIDC
-configuration, or publication. Record those outcomes only after they succeed.
+A local test pass does not verify GitHub runner execution, package visibility,
+GitHub token permissions, or publication. Record those outcomes only after they
+succeed.
