@@ -76,5 +76,3 @@ setup and first publication remain pending. [Workflow details and release guide]
 
 Licensed under [MIT](LICENSE). The private diary and original exercise materials
 are excluded from the repository.
-
-testing release action

@@ -9,12 +9,12 @@ and supports manual runs. It runs formatting, unit/component tests, demo build,
 package installation checks, dependency audit, and desktop/mobile browser tests.
 Successful runs provide an `npm-package` artifact containing the tested archive.
 
-[`publish.yml`](../.github/workflows/publish.yml) runs the same validation for a
-published, non-prerelease GitHub Release. Its tag must equal `v` plus the package
-version. The publish job uses npm OIDC authentication and publishes the exact
-archive validated by CI. PRs, ordinary pushes, and draft/prerelease releases do
-not publish to npm. Account setup and the first publication are described in
-the setup instructions below. These workflows have not run on GitHub yet.
+[`publish.yml`](../.github/workflows/publish.yml) runs after a non-initial push to
+`main`. It increments the patch version, validates and packs that version, commits
+the package metadata, creates a matching `vX.Y.Z` tag, pushes both, and publishes
+the tested archive through npm OIDC authentication. The workflow skips its own
+release commit to prevent a version-bump loop. Account setup and the first
+publication are described in the setup instructions below.
 
 ## Release status
 
@@ -99,22 +99,18 @@ subsequent OIDC release publish are separate setup steps.
 
 ## Subsequent releases
 
-1. Update package.json and package-lock.json to a new stable version, for example
-   with `npm version patch --no-git-tag-version`. Review and commit the changes.
-2. Push to main and wait for CI to pass.
-3. Create a GitHub Release targeting that commit with tag `v<version>`, such as
-   `v0.1.1`. Publish it as a normal release. Drafts and prereleases do not publish
-   npm versions through this workflow.
-4. `publish.yml` reruns CI against the release commit, checks the tag against
-   package.json, and publishes the same archive that passed package tests.
-5. Confirm the workflow result and registry version, then install the published
+1. Make the intended source or documentation change on a branch.
+2. Open and merge a pull request into `main` after CI passes.
+3. The merge push runs `publish.yml`, which increments the patch version, reruns
+   validation, commits the new package metadata, creates the matching tag, and
+   publishes the tested archive.
+4. Confirm the workflow result and registry version, then install the published
    package in a consuming project.
 
-The CI job has read-only repository permissions. The separate publish job gets
-OIDC permission and downloads the tested artifact without installing project
-dependencies or rerunning package lifecycle scripts. The workflow prevents two
-publishing jobs from running simultaneously. It never publishes on a PR or
-ordinary push.
+The release job gets repository write permission to commit the version bump and
+push the tag, plus OIDC permission for npm. It validates the bumped version before
+packing and publishing. The workflow prevents two publishing jobs from running
+simultaneously and skips the initial push and its own release commit.
 
 Do not create a publishing GitHub Release for 0.1.0 after the manual bootstrap
 publication; that would attempt to publish the same immutable version again.
