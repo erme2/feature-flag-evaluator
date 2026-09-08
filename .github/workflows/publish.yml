@@ -58,4 +58,4 @@ jobs:
         run: |
           packages=(artifacts/*.tgz)
           test "${#packages[@]}" -eq 1
-          npm publish "${packages[0]}" --access public --ignore-scripts
+          npm publish "./${packages[0]}" --access public --ignore-scripts
