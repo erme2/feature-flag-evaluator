@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  background: #f0f2f3;
+}
+.demo-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 28px;
+  font-family: Arial, sans-serif;
+}
+.demo-top {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 11px;
+  color: #81898e;
+  margin-bottom: 24px;
+}
+.demo-top span:nth-child(2) {
+  color: #465158;
+}
+.demo-top span:last-child {
+  margin-left: auto;
+}
+.demo-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #899298;
+  padding: 20px 2px;
+}
+@media (max-width: 700px) {
+  .demo-shell {
+    padding: 16px 10px;
+  }
+  .demo-top {
+    margin-bottom: 16px;
+  }
+  .demo-footer {
+    gap: 15px;
+  }
+}
