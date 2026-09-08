@@ -23,8 +23,8 @@ flags and saves committed flag edits locally. [Guided walkthrough](docs/demo.md)
 
 ## Use the widget
 
-Package name: `@erme2/feature-flag-evaluator`. No npm version is confirmed
-published yet. For local installation, run `npm pack` here, then install the
+Package name: `@erme2/feature-flag-evaluator`. For local installation, run `npm pack`
+here, then install the
 resulting archive in your React application:
 
 ```sh
@@ -44,7 +44,7 @@ persistence. Rules use exact string equality and AND; the first match wins.
 Deferred: richer operators and value types, OR groups, rollouts, a backend,
 environments, undo/redo, and context/draft persistence. The next steps are review,
 intended-host integration and accessibility/cross-browser verification, then
-completion of npm publishing setup. [Exercise coverage and roadmap](docs/scope.md).
+completion of GitHub Packages publishing setup. [Exercise coverage and roadmap](docs/scope.md).
 
 Arduino and Claude developed the original design; Arduino and Codex reviewed
 and implemented the POC. The exercise requested a 1–2 hour stop; this
@@ -53,13 +53,14 @@ reliably measured. [Design and development context](docs/development.md).
 
 ## GitHub Actions
 
-| Workflow                                        | Trigger                                                            | Purpose                                                                                         |
-| ----------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [CI](.github/workflows/ci.yml)                  | Push to `main`, pull request, manual run, or release workflow call | Validate code, demo, and packed React 18/19 installation; provide a downloadable npm archive    |
-| [Publish to npm](.github/workflows/publish.yml) | Published non-prerelease GitHub Release                            | Rerun CI, verify the version tag, and publish the tested archive through npm trusted publishing |
+| Workflow                                                    | Trigger                                                            | Purpose                                                                                      |
+| ----------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| [CI](.github/workflows/ci.yml)                              | Push to `main`, pull request, manual run, or release workflow call | Validate code, demo, and packed React 18/19 installation; provide a downloadable npm archive |
+| [Publish to GitHub Packages](.github/workflows/publish.yml) | Push to `main` after the initial push                              | Bump the patch version, tag it, and publish the tested archive to GitHub Packages            |
 
-Ordinary pushes and pull requests do not publish to npm. Initial npm account
-setup and first publication remain pending. [Workflow details and release guide](docs/releasing.md).
+Pull requests run CI; merges to `main` publish to GitHub Packages. Configure the
+package visibility as public so all GitHub users can install it. [Workflow details
+and release guide](docs/releasing.md).
 
 ## Documentation
 

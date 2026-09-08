@@ -31,7 +31,7 @@ require non-string context values. These are documented scope choices.
 The brief requests a 1–2 hour stop; Arduino requested a flexible timebox for this
 collaboration. Actual elapsed effort is unknown. Estimates in the original
 proposal were not measured results. Distribution preparation is now authorized; local Git initialization and GitHub
-Actions workflows are in place, with review, push, and npm publication pending.
+Actions workflows are in place, with GitHub Packages publication configured.
 No additional required UI feature has been identified as missing.
 
 ## Architecture and package boundary

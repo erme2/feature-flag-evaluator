@@ -2,9 +2,23 @@
 
 [Back to the README](../README.md)
 
-The package name is `@erme2/feature-flag-evaluator`. Publication is being prepared;
-no npm version is confirmed live yet. Once published, install it with
-`npm install @erme2/feature-flag-evaluator`.
+The package name is `@erme2/feature-flag-evaluator`, published through GitHub
+Packages. GitHub Packages requires authentication for installation, including
+public packages. Create a personal access token (classic) with `read:packages`,
+then configure the registry and token before installing:
+
+```ini
+@erme2:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}
+```
+
+```sh
+npm install @erme2/feature-flag-evaluator
+```
+
+The token is only needed by the consuming project. The release workflow publishes
+with its repository-scoped `GITHUB_TOKEN` and `packages: write` permission. If you
+publish manually, use a personal access token (classic) with `write:packages`.
 
 For local use now, build and package it, then install the archive in your host:
 
