@@ -39,7 +39,8 @@ assert.ok(
   packed.files.every(
     (file) =>
       ["package.json", "README.md", "LICENSE"].includes(file.path) ||
-      /^dist\/[^/]+\.(js|d\.ts)$/.test(file.path),
+      /^dist\/[^/]+\.(js|d\.ts)$/.test(file.path) ||
+      /^docs\/[^/]+\.md$/.test(file.path),
   ),
 );
 const archive = resolve(artifacts, packed.filename);

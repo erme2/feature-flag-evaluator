@@ -1,17 +1,30 @@
-# Publishing @erme2/feature-flag-evaluator
+# GitHub Actions and npm releases
 
-## Current status
+[Back to the README](../README.md)
 
-The earlier unpublished baseline commit was undone at Arduino's request.
-There are no commits on `main`; all project work is uncommitted and unstaged.
-Arduino requested a pause for review before the first commit or push. The public repository exists at
-`https://github.com/erme2/feature-flag-evaluator`; the package is configured for
-public npm access and licensed under MIT. No version is confirmed published.
+## Workflow overview
 
-The local diary, source correspondence, original exercise brief, credentials, build output,
-and generated archives are excluded from Git. npm packages include only the
-built library, declarations, README, package metadata, and LICENSE when present.
-The demo and its CSS are not published to npm.
+[`ci.yml`](../.github/workflows/ci.yml) validates pushes to `main` and pull requests,
+and supports manual runs. It runs formatting, unit/component tests, demo build,
+package installation checks, dependency audit, and desktop/mobile browser tests.
+Successful runs provide an `npm-package` artifact containing the tested archive.
+
+[`publish.yml`](../.github/workflows/publish.yml) runs the same validation for a
+published, non-prerelease GitHub Release. Its tag must equal `v` plus the package
+version. The publish job uses npm OIDC authentication and publishes the exact
+archive validated by CI. PRs, ordinary pushes, and draft/prerelease releases do
+not publish to npm. Account setup and the first publication are described in
+the setup instructions below. These workflows have not run on GitHub yet.
+
+## Release status
+
+The package is MIT licensed and configured for public npm access. The public
+repository is `erme2/feature-flag-evaluator`. A first local commit exists; no npm
+publication or successful hosted workflow run has been verified in this work.
+
+The private diary, correspondence, and original exercise brief are kept outside
+the repository. The npm archive contains the built library, declarations,
+README, Markdown guides, package metadata, and LICENSE. It contains no demo CSS.
 
 ## GitHub setup
 

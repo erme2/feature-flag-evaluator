@@ -2,8 +2,9 @@
 
 Current design, reconciled with the implementation on 2026-09-08. Arduino and
 Claude developed the original proposal; Arduino and Codex reviewed and evolved
-it into this POC. Historical reasoning and verification remain in `../private development history`.
-`README.md` contains the usage guide and exercise requirements assessment.
+it into this POC. Historical reasoning and verification remain in the private
+diary retained outside this repository. The [README](README.md) links the usage
+guides; [exercise coverage](docs/scope.md) contains the requirements assessment.
 
 ## Scope and exercise coverage
 
@@ -25,7 +26,7 @@ require non-string context values. These are documented scope choices.
 The brief requests a 1–2 hour stop; Arduino requested a flexible timebox for this
 collaboration. Actual elapsed effort is unknown. Estimates in the original
 proposal were not measured results. Distribution preparation is now authorized; local Git initialization and GitHub
-Actions workflows are in place, with review, first commit, push, and npm publication pending.
+Actions workflows are in place, with review, push, and npm publication pending.
 No additional required UI feature has been identified as missing.
 
 ## Architecture and package boundary
@@ -177,9 +178,8 @@ Each needs coordinated model, UI, validation, and test work where applicable;
 none is represented as a one-line addition or an existing action-log capability.
 
 The public GitHub repository now exists and the package is MIT licensed.
-The unpublished baseline commit was undone at Arduino's request; main has no
-commits. The diary and source exercise files are outside this checkout and
+After the earlier baseline was undone, Arduino created the first local commit. The diary and source exercise files are outside this checkout and
 excluded from Git. CI/release workflows are prepared locally. Arduino requested
-a pause for review before the first commit or push. Git SSH authentication is unavailable, and
-npm is not authenticated. `RELEASING.md` records the procedure and current
+a pause for review before further commits or push. Git SSH authentication is unavailable, and
+npm is not authenticated. `releasing.md` records the procedure and current
 blockers. Workflows and local dry runs are not evidence of a published version.

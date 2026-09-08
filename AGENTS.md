@@ -4,11 +4,11 @@
 
 - Follow the parent Yaup instructions and workflow. Read the parent `README.md`,
   `config/yaup.yaml`, and `.agents/README.md` as required there.
-- Read this project's `README.md` for current behavior, public API, installation,
-  and validation commands; `project documentation` for working scope; and relevant entries in
-  `../private development history` for decisions and verification history.
-- Read `asd.md` for the current design and exercise requirements assessment.
-  Keep it aligned with implementation; historical decisions remain in `../private development history`.
+- Read this project's `README.md` for the overview and links to the relevant
+  `docs/` guides for behavior, public API, installation, validation, scope, and
+  current project decisions.
+- Read `docs/architecture.md` for the current design and exercise requirements assessment.
+  Keep it aligned with the implementation and current project documentation.
 
 ## Working agreement
 
@@ -19,11 +19,11 @@
   `@erme2/feature-flag-evaluator`; intended public GitHub repository:
   `erme2/feature-flag-evaluator`, now created publicly. MIT is selected. Yaup
   registration is still pending. Arduino requested undoing the local commit;
-  main now has no commits. Stop with reviewable, uncommitted changes before
-  any commit or push.
+  Arduino has since created the first commit. Preserve it and stop with
+  reviewable working-tree changes before any further commit or push.
 - Future commits, pushes, repository/account changes, and releases follow the
   user's authorization and parent workflow. A request to edit code alone is
-  not authorization to publish a package. See `RELEASING.md` for release setup.
+  not authorization to publish a package. See `docs/releasing.md` for release setup.
 - Treat existing changes as user-owned. Keep changes within the requested scope
   and distinguish proposed capabilities from completed work.
 
@@ -63,5 +63,5 @@
 - Report checks actually run, failures, and checks unavailable or omitted. Do
   not present historical validation as a result of the current session.
 - Record meaningful decisions, changes, verification, and open questions in
-  `../private development history`; maintain `project documentation` when scope changes. Keep private correspondence,
-  secrets, and invented elapsed-time estimates out of these records.
+  the project documentation when scope changes. Keep private correspondence,
+  secrets, and invented elapsed-time estimates out of the repository.
